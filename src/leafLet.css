@@ -1,0 +1,14 @@
+.perpendicular-lines {
+  position: absolute;
+  border: .01px dashed #00000044;
+  z-index: -1;
+}
+
+.mouse-pointer {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: red;
+  border-radius: 50%;
+  z-index: -1;
+}

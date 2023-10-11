@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import LeafletMap from './leafLet';
+import DisplayMap from './drawCustom'
 
 function App() {
+
+  const [showMap, setShowMap] = useState([]);
+  const [mapToDisplay, setMapToDisplay] = useState(false);
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{mapToDisplay ? "Indoor Mapping" : "View of the Map"}</h1>
+      {
+        mapToDisplay ? (<LeafletMap setShowMap={setShowMap} showMap={showMap} setMapToDisplay={setMapToDisplay}/>) 
+          : (<DisplayMap setMapToDisplay={setMapToDisplay} showMap={showMap}/>)
+      }
+      
     </div>
   );
 }
