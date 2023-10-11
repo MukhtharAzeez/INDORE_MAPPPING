@@ -11,6 +11,7 @@ function HouseDesignCreator({ setShowMap, showMap, setMapToDisplay }) {
   const [freelyDraw, setFreelyDraw] = useState(false);
   const [drawing, setDrawing] = useState(false);
   const [lineWidth, setLineWidth] = useState(2);
+  const [scale, setScale] = useState(1);
 
   const updateMousePosition = (x, y) => {
     setMousePosition({ x, y });
@@ -139,6 +140,20 @@ function HouseDesignCreator({ setShowMap, showMap, setMapToDisplay }) {
     }
   };
 
+
+   const handleZoomIn = () => {
+     setScale((prevScale) => Math.min(prevScale + 0.1, 2)); // Limit zoom in to 2x
+   };
+
+   const handleZoomOut = () => {
+     setScale((prevScale) => Math.max(prevScale - 0.1, 0.4)); // Limit zoom out to 0.4x
+   };
+
+   const zoomStyle = {
+     transform: `scale(${scale})`,
+     transformOrigin: "top left", // Set the origin for scaling
+     
+   };
   return (
     <>
       <div
@@ -167,15 +182,22 @@ function HouseDesignCreator({ setShowMap, showMap, setMapToDisplay }) {
         >
           Show Map
         </button>
+        <button onClick={handleZoomIn}>Zoom In +</button>
+        <button onClick={handleZoomOut}>Zoom Out-</button>
       </div>
-      <canvas
-        ref={canvasRef}
-        onClick={handleCanvasClick}
-        onMouseDown={handleCanvasMouseDown}
-        onMouseUp={handleCanvasMouseUp}
-        onMouseMove={handleCanvasMouseMove}
-        style={{ border: "1px solid black" }}
-      />
+      <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
+        <div style={{ border: "1px solid black", width: "90%", overflow: 'scroll' }} >
+          <canvas
+            style={zoomStyle}
+            ref={canvasRef}
+            onClick={handleCanvasClick}
+            onMouseDown={handleCanvasMouseDown}
+            onMouseUp={handleCanvasMouseUp}
+            onMouseMove={handleCanvasMouseMove}
+            // style={{ border: "1px solid black" }}
+          />
+        </div>
+      </div>
       <div>
         <div
           className="perpendicular-lines"
